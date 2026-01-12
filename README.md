@@ -2,6 +2,9 @@
 
 **AI-powered technical hiring platform that eliminates bias, reduces time-to-hire, and identifies top engineering talent at scale.**
 
+
+![Swift Invoice Banner](https://img.shields.io/badge/MERN-Stack-brightgreen) ![License](https://img.shields.io/badge/license-MIT-blue) ![Version](https://img.shields.io/badge/version-1.0.0-orange)
+
 ---
 
 ## The Problem
