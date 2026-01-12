@@ -38,6 +38,13 @@ const candidateSessionSchema = new mongoose.Schema({
         type: String,
         trim: true,
     },
+    candidatePhone: {
+        type: String,
+        trim: true,
+    },
+    resumeUrl: {
+        type: String,
+    },
     round1Completed: {
         type: Boolean,
         default: false,
@@ -50,6 +57,21 @@ const candidateSessionSchema = new mongoose.Schema({
         default: 1,
         min: 1,
         max: 30,
+    },
+    // Round 2 fields
+    round2Started: {
+        type: Boolean,
+        default: false,
+    },
+    round2StartedAt: {
+        type: Date,
+    },
+    round2Completed: {
+        type: Boolean,
+        default: false,
+    },
+    round2CompletedAt: {
+        type: Date,
     },
     createdAt: {
         type: Date,

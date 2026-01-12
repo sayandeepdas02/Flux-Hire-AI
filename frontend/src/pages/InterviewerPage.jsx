@@ -9,6 +9,7 @@ import Modal from "../ui/components/Modal";
 import Table from "../ui/components/Table";
 import Badge from "../ui/components/Badge";
 import EmptyState from "../ui/components/EmptyState";
+import interviewerAPI from "../services/interviewerAPI";
 
 export default function InterviewerPage() {
   const sessions = useSelector((state) => state.session.sessions) || [];
@@ -19,13 +20,40 @@ export default function InterviewerPage() {
   const [search, setSearch] = useState("");
   const [sortOrder, setSortOrder] = useState("desc");
   const [selectedCandidate, setSelectedCandidate] = useState(null);
+  const [creating, setCreating] = useState(false);
+  const [error, setError] = useState(null);
 
   // Create session
-  const handleCreateSession = () => {
+  const handleCreateSession = async () => {
     if (!title.trim()) return alert("Enter a session title!");
-    dispatch(addSession({ title, interviewer }));
-    setTitle("");
-    setInterviewer("");
+
+    setCreating(true);
+    setError(null);
+
+    try {
+      const sessionData = await interviewerAPI.createSession(title, interviewer);
+
+      // Add to Redux store with the token and link
+      dispatch(addSession({
+        id: sessionData.token, // Use token as ID for consistency
+        title,
+        interviewer: sessionData.interviewer,
+        token: sessionData.token,
+        link: sessionData.link,
+        createdAt: new Date().toISOString(),
+      }));
+
+      setTitle("");
+      setInterviewer("");
+      alert("Session created successfully!");
+    } catch (err) {
+      console.error("Create session error:", err);
+      const errorMessage = err.response?.data?.error || "Failed to create session";
+      setError(errorMessage);
+      alert(errorMessage);
+    } finally {
+      setCreating(false);
+    }
   };
 
   // Flatten all candidates across sessions
@@ -148,8 +176,8 @@ export default function InterviewerPage() {
             </div>
           </Card.Content>
           <Card.Footer>
-            <Button onClick={handleCreateSession} size="lg">
-              Create Session
+            <Button onClick={handleCreateSession} size="lg" disabled={creating}>
+              {creating ? 'Creating...' : 'Create Session'}
             </Button>
           </Card.Footer>
         </Card>
@@ -190,7 +218,7 @@ export default function InterviewerPage() {
                       </div>
                       <div className="flex items-center gap-2">
                         <Input
-                          value={`${window.location.origin}/session/${s.id}`}
+                          value={s.link || `${window.location.origin}/interviewee/session/${s.token || s.id}`}
                           readOnly
                           className="w-64 text-sm"
                         />
@@ -199,7 +227,8 @@ export default function InterviewerPage() {
                           size="sm"
                           icon={<Copy className="h-4 w-4" />}
                           onClick={() => {
-                            navigator.clipboard.writeText(`${window.location.origin}/session/${s.id}`);
+                            const linkToCopy = s.link || `${window.location.origin}/interviewee/session/${s.token || s.id}`;
+                            navigator.clipboard.writeText(linkToCopy);
                             alert("Link copied!");
                           }}
                         >

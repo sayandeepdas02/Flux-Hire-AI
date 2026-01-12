@@ -79,7 +79,7 @@ function MCQTestPage() {
 
         setSubmitting(true);
         try {
-            const timeSpent = 20 - timeLeft;
+            const timeSpent = 20; // Full time elapsed when auto-skipping
             await sessionAPI.submitResponse(token, questionNumber, selectedOptions, timeSpent, true);
 
             // Move to next question or complete
@@ -96,7 +96,7 @@ function MCQTestPage() {
         } finally {
             setSubmitting(false);
         }
-    }, [token, questionNumber, selectedOptions, timeLeft, submitting, navigate]);
+    }, [token, questionNumber, selectedOptions, submitting, navigate]);
 
     // Handle option selection
     const handleOptionSelect = (optionIndex) => {
@@ -227,14 +227,14 @@ function MCQTestPage() {
                                     key={index}
                                     onClick={() => handleOptionSelect(index)}
                                     className={`w-full text-left p-4 rounded-lg border-2 transition-all ${isSelected
-                                            ? 'border-blue-600 bg-blue-50'
-                                            : 'border-gray-200 hover:border-blue-300 hover:bg-gray-50'
+                                        ? 'border-blue-600 bg-blue-50'
+                                        : 'border-gray-200 hover:border-blue-300 hover:bg-gray-50'
                                         }`}
                                 >
                                     <div className="flex items-center">
                                         <div className={`flex-shrink-0 w-8 h-8 rounded-full border-2 flex items-center justify-center mr-4 ${isSelected
-                                                ? 'border-blue-600 bg-blue-600 text-white'
-                                                : 'border-gray-300'
+                                            ? 'border-blue-600 bg-blue-600 text-white'
+                                            : 'border-gray-300'
                                             }`}>
                                             {isSingleCorrect ? (
                                                 <div className={`w-3 h-3 rounded-full ${isSelected ? 'bg-white' : ''}`}></div>

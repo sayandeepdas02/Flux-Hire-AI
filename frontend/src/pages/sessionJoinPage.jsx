@@ -20,6 +20,13 @@ function SessionJoinPage() {
           return;
         }
 
+        // Check if candidate has completed onboarding
+        if (!sessionData.candidateName || !sessionData.candidateEmail) {
+          // Redirect to onboarding page
+          navigate(`/interviewee/session/${token}/onboarding`);
+          return;
+        }
+
         // Redirect to test page
         navigate(`/interviewee/session/${token}/test`);
       } catch (err) {

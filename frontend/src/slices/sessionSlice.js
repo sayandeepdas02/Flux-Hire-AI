@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  sessions: [], 
+  sessions: [],
 };
 
 export const sessionSlice = createSlice({
@@ -11,7 +11,9 @@ export const sessionSlice = createSlice({
     // ✅ Create a new session
     addSession: (state, action) => {
       const newSession = {
-        id: crypto.randomUUID(),
+        id: action.payload.id || action.payload.token || crypto.randomUUID(),
+        token: action.payload.token,
+        link: action.payload.link,
         title: action.payload.title || "Untitled Session",
         interviewer: action.payload.interviewer || "",
         candidates: [],

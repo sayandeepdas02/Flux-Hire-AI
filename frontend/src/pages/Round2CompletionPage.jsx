@@ -1,10 +1,9 @@
 import { useEffect, useState } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import sessionAPI from '../services/sessionAPI';
 
-function MCQCompletionPage() {
+function Round2CompletionPage() {
     const { token } = useParams();
-    const navigate = useNavigate();
     const [sessionData, setSessionData] = useState(null);
     const [loading, setLoading] = useState(true);
 
@@ -27,7 +26,7 @@ function MCQCompletionPage() {
         return (
             <div className="min-h-screen flex items-center justify-center bg-gray-50">
                 <div className="text-center">
-                    <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-blue-600 mx-auto mb-4"></div>
+                    <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-purple-600 mx-auto mb-4"></div>
                     <p className="text-gray-600 text-lg">Loading...</p>
                 </div>
             </div>
@@ -35,25 +34,25 @@ function MCQCompletionPage() {
     }
 
     return (
-        <div className="min-h-screen bg-gradient-to-br from-green-50 to-emerald-50 flex items-center justify-center p-6">
+        <div className="min-h-screen bg-gradient-to-br from-purple-50 to-pink-50 flex items-center justify-center p-6">
             <div className="max-w-2xl w-full bg-white rounded-2xl shadow-2xl p-12 text-center">
                 {/* Success Icon */}
                 <div className="mb-6">
-                    <div className="mx-auto w-24 h-24 bg-green-100 rounded-full flex items-center justify-center">
-                        <svg className="w-12 h-12 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                    <div className="mx-auto w-24 h-24 bg-purple-100 rounded-full flex items-center justify-center">
+                        <svg className="w-12 h-12 text-purple-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                         </svg>
                     </div>
                 </div>
 
                 {/* Title */}
                 <h1 className="text-4xl font-bold text-gray-900 mb-4">
-                    Round 1 Completed! 🎉
+                    Round 2 Completed! 🎉
                 </h1>
 
                 {/* Message */}
                 <p className="text-lg text-gray-600 mb-8">
-                    Congratulations! You have successfully completed the MCQ round.
+                    Congratulations! You have successfully completed the DSA Coding round.
                 </p>
 
                 {/* Stats */}
@@ -61,13 +60,13 @@ function MCQCompletionPage() {
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <div>
                             <p className="text-sm text-gray-500 mb-1">Total Questions</p>
-                            <p className="text-3xl font-bold text-gray-900">30</p>
+                            <p className="text-3xl font-bold text-gray-900">4</p>
                         </div>
                         <div>
                             <p className="text-sm text-gray-500 mb-1">Completed At</p>
                             <p className="text-lg font-semibold text-gray-900">
-                                {sessionData?.round1CompletedAt
-                                    ? new Date(sessionData.round1CompletedAt).toLocaleString()
+                                {sessionData?.round2CompletedAt
+                                    ? new Date(sessionData.round2CompletedAt).toLocaleString()
                                     : 'Just now'
                                 }
                             </p>
@@ -84,19 +83,24 @@ function MCQCompletionPage() {
                         <div className="text-left">
                             <h3 className="font-semibold text-blue-900 mb-1">What's Next?</h3>
                             <p className="text-sm text-blue-800">
-                                Your responses have been recorded. The interviewer will review your performance and contact you regarding the next steps.
+                                Your code submissions have been recorded. The interviewer will review your solutions and contact you regarding the next steps.
                             </p>
                         </div>
                     </div>
                 </div>
 
-                {/* Start Round 2 Button */}
-                <button
-                    onClick={() => navigate(`/interviewee/session/${token}/round2/intro`)}
-                    className="w-full px-8 py-4 bg-blue-600 text-white rounded-lg font-semibold hover:bg-blue-700 transition-all shadow-md mb-6"
-                >
-                    Start Round 2 - DSA Coding 🚀
-                </button>
+                {/* Achievement Badge */}
+                <div className="bg-gradient-to-r from-purple-500 to-pink-500 text-white rounded-lg p-6 mb-8">
+                    <div className="flex items-center justify-center gap-3">
+                        <svg className="w-8 h-8" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                        </svg>
+                        <div>
+                            <div className="font-bold text-lg">Interview Complete!</div>
+                            <div className="text-sm opacity-90">You've completed all rounds</div>
+                        </div>
+                    </div>
+                </div>
 
                 {/* Footer Message */}
                 <p className="text-sm text-gray-500">
@@ -107,4 +111,4 @@ function MCQCompletionPage() {
     );
 }
 
-export default MCQCompletionPage;
+export default Round2CompletionPage;
