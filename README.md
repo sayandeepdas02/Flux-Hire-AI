@@ -1,4 +1,4 @@
-# Flux Hire AI
+# Flux Hire
 
 **AI-powered technical hiring platform that eliminates bias, reduces time-to-hire, and identifies top engineering talent at scale.**
 
